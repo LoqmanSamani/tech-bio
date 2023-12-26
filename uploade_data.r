@@ -10,7 +10,7 @@ user <- "TechBio"
 password <- "T3chB10!"
 
 
-#con =  dbConnect(dbDriver("PostgreSQL"), host = host, port = port, dbname = dbname, user = user, password = password)
+con =  dbConnect(dbDriver("PostgreSQL"), host = host, port = port, dbname = dbname, user = user, password = password)
 
 csv_data <- read.csv("/home/sam/Desktop/data.csv")
 

@@ -21,4 +21,3 @@ cat("CSV/Excel data inserted successfully.\n")
 my_table <- dbReadTable(con, "BodyInfo")
 print(my_table)
 
-

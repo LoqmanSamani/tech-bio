@@ -78,19 +78,19 @@ def measure_generate(lst, left_r, right_r, r_num, num=20):
 
 
 fm_high = measure_generate(m_high, 3, 1, r_num=1)
-#print(fm_high)
+print(fm_high)
 
 
 ff_high = measure_generate(f_high, 2, 1, r_num=1)
-#print(ff_high)
+print(ff_high)
 
 
 fm_weight = measure_generate(m_weight, 3, 5, r_num=1)
-#print(fm_weight)
+print(fm_weight)
 
 
 ff_weight = measure_generate(f_weight, 2, 3, r_num=1)
-#print(ff_weight)
+print(ff_weight)
 
 
 
@@ -104,7 +104,7 @@ data = pd.DataFrame({
     "Measured Weight (kg)": np.hstack((fm_weight, ff_weight))
 })
 
-#print(data)
+print(data)
 
 
 """
@@ -123,8 +123,8 @@ data["Deviation in Height (cm)"] = diff_height
 data["Deviation in Weight (kg)"] = diff_weight
 data["Age Group"] = age_group
 
-#print(data)
+print(data)
 
-#data.to_csv("data.csv", index=False)
+data.to_csv("data.csv", index=False)
 
 

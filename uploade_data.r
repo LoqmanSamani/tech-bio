@@ -21,3 +21,22 @@ cat("CSV/Excel data inserted successfully.\n")
 my_table <- dbReadTable(con, "BodyInfo")
 print(my_table)
 
+
+
+
+tables <- dbListTables(con)
+print(tables)
+
+
+
+
+table_name = "body.Person"
+
+
+data_schema = dbReadTable(con, table_name)
+print(data_schema)
+
+
+
+
+dbRemoveTable(con, table_name)

@@ -119,5 +119,5 @@ abline(h=0, col="orange")
 par(mfrow=c(1,1), mar=c(5,4,4,2)+0.1)
 ```
 ---
-![diff_hist.png]("/home/sam/Documents/projects/rproject/diff_hist.png")
+![diff_hist.png](https://github.com/LoqmanSamani/rproject/blob/systembiology/diff_hist.png)
 

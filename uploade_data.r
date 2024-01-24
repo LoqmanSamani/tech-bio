@@ -40,3 +40,5 @@ print(data_schema)
 
 
 dbRemoveTable(con, table_name)
+
+

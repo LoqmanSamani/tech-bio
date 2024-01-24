@@ -2,6 +2,7 @@
 library(RPostgreSQL)
 library(readxl)
 library(dplyr)
+library(ggplot2)
 
 host = "82.165.61.139"
 port = 5430
@@ -118,6 +119,55 @@ plot(1:40, w_diff, col="gray", xlab="Participant Index",
 abline(h=0, col="orange")
 par(mfrow=c(1,1), mar=c(5,4,4,2)+0.1)
 ```
----
-![diff_hist.png](https://github.com/LoqmanSamani/rproject/blob/systembiology/diff_hist.png)
 
+---
+
+![img](./image/diff_scatt.png)
+
+---
+
+```R
+hist_h = ggplot(data, aes(x = h_diff)) +
+  geom_histogram(binwidth = 1, color = "black", fill = "gray", alpha = 0.7) +
+  labs(title = "Histogram of Differences in Height Measurement",
+       x = "Height Difference (cm)",
+       y = "Number of Participants") +
+  theme_minimal()
+
+hist_w = ggplot(data, aes(x = w_diff)) +
+  geom_histogram(binwidth = 1, color = "black", fill = "gray", alpha = 0.7) +
+  labs(title = "Histogram of Differences in Weight Measurement",
+       x = "Weight Difference (kg)",
+       y = "Number of Participants") +
+  theme_minimal()
+
+grid.arrange(hist_height, hist_weight, ncol = 2)
+```
+
+---
+
+![img](./image/diff_hist.png)
+
+---
+
+```R
+par(mfrow = c(1, 2), mar = c(5, 4, 2, 2))  # Set up a 1x2 grid of plots
+
+boxplot(h_diff, horizontal = TRUE, col = "lightgray",
+        main = "Boxplot of Height Differences",
+        xlab = "Height Difference (cm)", 
+        ylab = "Difference")
+
+boxplot(w_diff, horizontal = TRUE, col = "gray", 
+        main = "Boxplot of Weight Differences",
+        xlab = "Weight Difference (kg)", 
+        ylab = "Difference")
+
+par(mfrow = c(1, 1))
+```
+
+---
+
+![img](./image/diff_box.png)
+
+---

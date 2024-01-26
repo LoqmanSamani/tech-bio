@@ -2,6 +2,7 @@ library(RPostgreSQL)
 library(readxl)
 library(dplyr)
 library(nortest)
+library(multcomp)
 
 
 
@@ -105,7 +106,7 @@ cat("Sum of Weight Differences:", sum(w_diff), "\n")
 g_split = split(data, data$gender)
 
 m_data = g_split$Male
-f_data = gender_split$Female
+f_data = g_split$Female
 
 
 mh_diff <- m_data$estimated_height - m_data$measured_height
@@ -130,6 +131,37 @@ t_test_weight <- t.test(mw_diff, fw_diff, var.equal = FALSE)
 
 print(t_test_height)
 print(t_test_weight)
+
+
+
+data$height_dev <- data$estimated_height - data$measured_height
+data$weight_dev <- data$estimated_weight - data$measured_weight
+
+
+
+# Adding 'age_group' column
+data$age_group <- ifelse(data$age <= 35, "young", "old")
+
+# Assuming 'height_dev' and 'weight_dev' are the variables of interest
+model_height <- lm(height_dev ~ gender + age_group + gender:age_group, data = data)
+model_weight <- lm(weight_dev ~ gender + age_group + gender:age_group, data = data)
+
+print(summary(model_height))
+print(summary(model_weight))
+
+
+
+# Assuming 'data' is your dataframe
+
+# Fit ANOVA model for height differences with interaction effect
+model_interaction_height <- aov(height_dev ~ gender * age_group, data = data)
+print(summary(model_interaction_height))
+
+# Fit ANOVA model for weight differences with interaction effect
+model_interaction_weight <- aov(weight_dev ~ gender * age_group, data = data)
+print(summary(model_interaction_weight))
+
+
 
 
 

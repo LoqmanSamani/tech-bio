@@ -20,6 +20,13 @@ w_diff = data["estimated_weight"] - data["measured_weight"]
 print(w_diff)
 print(sum(w_diff))
 
+print(data)
+
+
+data["height_dev"] = data["estimated_height"] - data["measured_height"]
+data["weight_dev"] = data["estimated_weight"] - data["measured_weight"]
+
+
 """
 plt.figure(figsize=(12, 4))
 
@@ -100,8 +107,8 @@ print(w_med)
 
 
 # Q-Q plots
-fig = sm.qqplot(w_diff, line="s")
-plt.show()
+#fig = sm.qqplot(w_diff, line="s")
+#plt.show()
 
 
 print(list(h_diff))
@@ -153,7 +160,7 @@ print(fw_var)
 print(fw_std)
 print(fw_med)
 
-
+"""
 self_reported = data["estimated_height"]
 measured = data["measured_height"]      # Replace [...] with your data
 
@@ -170,3 +177,18 @@ plt.xlabel('Mean of Self-reported and Measured')
 plt.ylabel('Difference (Self-reported - Measured)')
 plt.legend()
 plt.show()
+"""
+
+print(data.columns)
+print(data["age"])
+
+
+data["age_group"] = ["young" if old <= 35 else "old" for old in data["age"]]
+
+
+
+print(data.columns)
+print(data[["age", "age_group"]])
+
+
+print(data.columns)

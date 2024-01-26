@@ -3,7 +3,8 @@ library(readxl)
 library(dplyr)
 library(nortest)
 library(multcomp)
-
+library(igraph)
+library(PerformanceAnalytics)
 
 
 host <- "82.165.61.139"
@@ -160,6 +161,17 @@ print(summary(model_interaction_height))
 # Fit ANOVA model for weight differences with interaction effect
 model_interaction_weight <- aov(weight_dev ~ gender * age_group, data = data)
 print(summary(model_interaction_weight))
+
+cor1 = cor(data[, c(4, 12, 13)], method="kendall")
+print(cor1)
+
+net = graph_from_data_frame(d=cor1, directed=F)
+plot(net)
+plot(net, layout=layout_with_fr(net))
+
+col = colorRampPalette(c("red", "white", "blue"))(20)
+heatmap(x = cor1, col = col, symm = TRUE)
+
 
 
 

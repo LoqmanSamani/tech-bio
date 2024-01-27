@@ -183,12 +183,14 @@ print(data.columns)
 print(data["age"])
 
 
-data["age_group"] = ["young" if old <= 35 else "old" for old in data["age"]]
+data["age_group"] = ["young" if old <= 28 else ("middle age" if old > 28 and old < 42 else "old") for old in data["age"]]
+
+print((data["age_group"] == "young").sum())
+print((data["age_group"] == "middle age").sum())
+print((data["age_group"] == "old").sum())
 
 
+subdata = data[["number", "height_dev", "weight_dev", "gender", "age_group"]]
+print(subdata)
 
-print(data.columns)
-print(data[["age", "age_group"]])
 
-
-print(data.columns)

@@ -6,6 +6,7 @@ library(readxl)
 library(dplyr)
 library(ggplot2)
 library(gridExtra)
+library(car)
 
 host = "82.165.61.139"
 port = 5430
@@ -34,7 +35,7 @@ print(tables)
   [6] "databasechangelog"
  ...
 
-[87] "body.Project"
+[87] `<span style="color:purple">`"body.Project"
  [94] "body.Person"
  [95] "body.Author"
  [96] "body.MeasurementResults"
@@ -196,8 +197,8 @@ par(mfrow = c(1, 1))
 #### Shapiro-Wilk, Lilliefors:
 
 ```R
-h_diff = shapiro.test(data$height_dev)                                          
-h_diff_sqrt = shapiro.test(sqrt(data$height_dev))                                
+h_diff = shapiro.test(data$height_dev)                                      
+h_diff_sqrt = shapiro.test(sqrt(data$height_dev))                            
 h_diff_lil = lillie.test(data$height_dev) 
 w_diff = shapiro.test(data$weight_dev)
 
@@ -219,10 +220,10 @@ D = 0.12597, p-value = 0.1132
 #### one-sample t-test:
 
 ```R
-t_test_height = t.test(data$height_dev, mu = 0, alternative = "greater")     
+t_test_height = t.test(data$height_dev, mu = 0, alternative = "greater")   
 t_test_weight = t.test(data$weight_dev, mu = 0, alternative = "less")
 
-print(t_test_height)                                                           
+print(t_test_height)                                                       
 print(t_test_weight)
 ```
 
@@ -268,16 +269,16 @@ fw_diff = f_data$weight_dev
 **Two-Sample t-test**
 
 ```R
-p_value_height = var.test(mh_diff, fh_diff)$p.value                
+p_value_height = var.test(mh_diff, fh_diff)$p.value            
 p_value_weight = var.test(mw_diff, fw_diff)$p.value
 
-t_test_height = t.test(mh_diff, fh_diff)                             
+t_test_height = t.test(mh_diff, fh_diff)                         
 t_test_height = t.test(mw_diff, fw_diff)
 
-print(p_value_height)                                                  
+print(p_value_height)                                              
 print(p_value_weight)
 
-print(t_test_height)                                                     
+print(t_test_height)                                                 
 print(t_test_height)
 ```
 
@@ -303,13 +304,17 @@ based on the results, there is evidence of **a significant difference in reporte
 
 ---
 
-# **Age-Based Analysis**
-
-```R
-data$age_group = ifelse(data$age <= 35, "young", "old")
-```
+# Age-Based Analyse
 
 **Age as a Covariate**
+
+```R
+data$age_group = cut(data$age,
+                      breaks = c(-Inf, 28, 42, Inf),
+                      labels = c("young", "middle age", "old"),
+                      include.lowest = TRUE)
+```
+
 
 ```R
 model_height = lm(height_dev ~ gender + age_group + gender:age_group, data = data)
@@ -345,7 +350,6 @@ For **height_dev**, the most important factors appear to be the **gender effect*
 
 For **weight_dev**, the **gender effect is marginally significant**, and the **interaction effect with age group** is also **marginally significant**.
 
-
 ##### Interaction Effects Between Age Groups and Differences
 
 ```R
@@ -366,3 +370,149 @@ gender:age_group   1     6.16      6.162      6.624     **0.0143**              
 Residuals                 36  33.49   0.930                                                                        Residuals                36 118.00   3.278
 
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1                                                     Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+---
+
+---
+
+## Full Factorial Experiment
+
+##### Analyze the effects of gender and age on height and weight differences
+
+* young:  age <= 28
+* middle age: 28 < age < 42
+* old:   42 <= age
+
+| Age \ Gender | Male | Female |
+| :----------- | ---- | ------ |
+| young        |      |        |
+| middle mge   |      |        |
+| old          |      |        |
+
+* Interaction1_m_y : interaction effect between male and young
+* Interaction1_f_y : interaction effect between female and young
+* Interaction1_m_ma : interaction effect between male and middle age
+* Interaction1_f_ma : interaction effect between female and middle age
+* Interaction1_m_o : interaction effect between male and old
+* Interaction1_f_o : interaction effect between female and old
+
+| Age \ Gender | Male              | Female            |
+| ------------ | ----------------- | ----------------- |
+| Young        | Interacion1_M_Y   | Interaction1_F_Y  |
+| Middle Age   | Interaction1_M_MA | Interaction1_F_MA |
+| Old          | Interaction1_M_O  | Interaction1_F_O  |
+
+### Hypotheses
+
+**Null Hypotheses (H0):**
+
+* There is no significant difference in height differences between age groups.
+* There is no significant difference in height differences between genders.
+* There is no significant interaction effect between age and gender on height differences.
+* Repeat the same for weight differences.
+
+**Alternative Hypotheses (H1):**
+
+* There is a significant difference in height differences between age groups.
+* There is a significant difference in height differences between genders.
+* There is a significant interaction effect between age and gender on height differences.
+* Repeat the same for weight differences.
+
+
+```R
+subdata <- data[c("number", "height_dev", "weight_dev", "gender", "age_group")]
+print(subdata)
+```
+
+
+|     | number         | height_dev | weight_dev | gender | age_group  |
+| --- | -------------- | ---------- | ---------- | ------ | ---------- |
+| 1   | Participant 1  | -0.5       | 2.9        | Male   | young      |
+| 2   | Participant 2  | 1.1        | -1.1       | Male   | middle age |
+| 3   | Participant 3  | 2.5        | -0.3       | Male   | old        |
+| 4   | Participant 4  | 0.1        | 1.2        | Male   | middle age |
+| 5   | Participant 5  | 0.0        | 2.0        | Male   | middle age |
+| ... | ...            | ...        | ...        | ...    | ...        |
+| 40  | Participant 40 | -0.6       | 1.1        | Female | old        |
+
+
+##### Two-way ANOVA
+
+```R
+model_height <- aov(height_dev ~ age_group * gender, data = data)
+model_weight <- aov(weight_dev ~ age_group * gender, data = data)
+
+h_summ = summary(model_height)
+w_summ = summary(model_weight)
+
+print(h_summ)
+print(w_summ)
+```
+
+    Df Sum Sq Mean Sq F value Pr(>F)                                                            Df Sum Sq Mean Sq F value Pr(>F)
+age_group         2     0.28     0.141     0.144   0.8666                                   age_group        2    8.26    4.132     1.234    0.304
+gender              1     4.86     4.855     4.958   0.0327 *                                 gender             1     0.68    0.683     0.204    0.654
+age_group:gender  2   6.55   3.273   3.342   0.0473 *                                 age_group:gender  2  14.20   7.098  2.119   0.136
+Residuals         34    33.29   0.979                                                                Residuals        34 113.90   3.350
+
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+  
+
+##### Tukey Honest Significant Difference (Tukey HSD)
+
+```R
+h_tukey = TukeyHSD(model_height, "age_group:gender", ordered=TRUE)
+w_tukey = TukeyHSD(model_height, "age_group:gender", ordered=TRUE)
+print(h_tukey)
+print(w_tukey)
+```
+
+
+Tukey multiple comparisons of means
+    95% family-wise confidence level
+    factor levels have been ordered
+
+Fit: aov(formula = height_dev ~ age_group * gender, data = data)
+
+$`age_group:gender`
+                                                             diff        lwr          upr     p adj
+old:Female-middle age:Female          0.12916667   -1.4838735   1.742207   0.9998763
+young:Male-middle age:Female         0.40000000   -1.3244124  2.124412 0.9806670
+young:Female-middle age:Female    0.91666667 -0.8077458 2.641079 0.6013519
+middle age:Male-middle age:Female 1.31111111 -0.2630549 2.885277 0.1484476
+old:Male-middle age:Female        1.32666667 -0.4819123 3.135246 0.2579237
+young:Male-old:Female             0.27083333 -1.3422068 1.883873 0.9955706
+young:Female-old:Female           0.78750000 -0.8255401 2.400540 0.6827695
+middle age:Male-old:Female        1.18194444 -0.2693649 2.633254 0.1655018
+old:Male-old:Female               1.19750000 -0.5052208 2.900221 0.3001979
+young:Female-young:Male           0.51666667 -1.2077458 2.241079 0.9427297
+middle age:Male-young:Male        0.91111111 -0.6630549 2.485277 0.5118580
+old:Male-young:Male               0.92666667 -0.8819123 2.735246 0.6377380
+middle age:Male-young:Female      0.39444444 -1.1797215 1.968610 0.9729241
+old:Male-young:Female             0.41000000 -1.3985790 2.218579 0.9825338
+old:Male-middle age:Male          0.01555556 -1.6503851 1.681496 1.0000000
+
+
+Tukey multiple comparisons of means
+    95% family-wise confidence level
+    factor levels have been ordered
+
+Fit: aov(formula = height_dev ~ age_group * gender, data = data)
+
+$`age_group:gender`
+                                        diff        lwr      upr     p adj
+old:Female-middle age:Female      0.12916667 -1.4838735 1.742207 0.9998763
+young:Male-middle age:Female      0.40000000 -1.3244124 2.124412 0.9806670
+young:Female-middle age:Female    0.91666667 -0.8077458 2.641079 0.6013519
+middle age:Male-middle age:Female 1.31111111 -0.2630549 2.885277 0.1484476
+old:Male-middle age:Female        1.32666667 -0.4819123 3.135246 0.2579237
+young:Male-old:Female             0.27083333 -1.3422068 1.883873 0.9955706
+young:Female-old:Female           0.78750000 -0.8255401 2.400540 0.6827695
+middle age:Male-old:Female        1.18194444 -0.2693649 2.633254 0.1655018
+old:Male-old:Female               1.19750000 -0.5052208 2.900221 0.3001979
+young:Female-young:Male           0.51666667 -1.2077458 2.241079 0.9427297
+middle age:Male-young:Male        0.91111111 -0.6630549 2.485277 0.5118580
+old:Male-young:Male               0.92666667 -0.8819123 2.735246 0.6377380
+middle age:Male-young:Female      0.39444444 -1.1797215 1.968610 0.9729241
+old:Male-young:Female             0.41000000 -1.3985790 2.218579 0.9825338
+old:Male-middle age:Male          0.01555556 -1.6503851 1.681496 1.0000000

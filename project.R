@@ -5,7 +5,7 @@ library(nortest)
 library(multcomp)
 library(igraph)
 library(PerformanceAnalytics)
-
+#library(car)
 
 host <- "82.165.61.139"
 port <- 5430
@@ -141,38 +141,41 @@ data$weight_dev <- data$estimated_weight - data$measured_weight
 
 
 # Adding 'age_group' column
-data$age_group <- ifelse(data$age <= 35, "young", "old")
+data$age_group = cut(data$age,
+                      breaks = c(-Inf, 28, 42, Inf),
+                      labels = c("young", "middle age", "old"),
+                      include.lowest = TRUE)
 
 # Assuming 'height_dev' and 'weight_dev' are the variables of interest
-model_height <- lm(height_dev ~ gender + age_group + gender:age_group, data = data)
-model_weight <- lm(weight_dev ~ gender + age_group + gender:age_group, data = data)
+#model_height <- lm(height_dev ~ gender + age_group + gender:age_group, data = data)
+#model_weight <- lm(weight_dev ~ gender + age_group + gender:age_group, data = data)
 
-print(summary(model_height))
-print(summary(model_weight))
+#print(summary(model_height))
+#print(summary(model_weight))
 
 
 
 # Assuming 'data' is your dataframe
 
 # Fit ANOVA model for height differences with interaction effect
-model_interaction_height <- aov(height_dev ~ gender * age_group, data = data)
-print(summary(model_interaction_height))
+#model_interaction_height <- aov(height_dev ~ gender * age_group, data = data)
+#print(summary(model_interaction_height))
 
 # Fit ANOVA model for weight differences with interaction effect
-model_interaction_weight <- aov(weight_dev ~ gender * age_group, data = data)
-print(summary(model_interaction_weight))
+#model_interaction_weight <- aov(weight_dev ~ gender * age_group, data = data)
+#print(summary(model_interaction_weight))
 
-cor1 = cor(data[, c(4, 12, 13)], method="kendall")
-print(cor1)
+#cor1 = cor(data[, c(4, 12, 13)], method="kendall")
+#print(cor1)
 
-net = graph_from_data_frame(d=cor1, directed=F)
-plot(net)
-plot(net, layout=layout_with_fr(net))
+#net = graph_from_data_frame(d=cor1, directed=F)
+#plot(net)
+#plot(net, layout=layout_with_fr(net))
 
-col = colorRampPalette(c("red", "white", "blue"))(20)
-heatmap(x = cor1, col = col, symm = TRUE)
+#col = colorRampPalette(c("red", "white", "blue"))(20)
+#heatmap(x = cor1, col = col, symm = TRUE)
 
-
+#print(data)
 
 
 
@@ -199,8 +202,49 @@ heatmap(x = cor1, col = col, symm = TRUE)
 #print(paste("Standard Deviation of Weight Differences (Female):", sd_weight_female))
 
 
+subdata <- data[c("number", "height_dev", "weight_dev", "gender", "age_group")]
+print(subdata)
 
 
+# Assuming your data frame is named 'data' with columns 'height_diff', 'weight_diff', 'age_group', and 'gender'
+# Install the 'car' package if not already installed: install.packages("car")
 
+
+# Fit the ANOVA model for height differences
+model_height <- aov(height_dev ~ age_group * gender, data = data)
+
+# Print summary of the ANOVA for height differences
+h_summ = summary(model_height)
+print(h_summ)
+# Fit the ANOVA model for weight differences
+model_weight <- aov(weight_dev ~ age_group * gender, data = data)
+
+# Print summary of the ANOVA for weight differences
+w_summ = summary(model_weight)
+
+
+print(w_summ)
 
 #dbDisconnect(con)
+
+ht = TukeyHSD(model_height, "age_group:gender", ordered=TRUE)
+wt = TukeyHSD(model_height, "age_group:gender", ordered=TRUE)
+print(ht)
+print(wt)
+
+# Assuming 'model_height' is your ANOVA model
+# You should replace this with your actual ANOVA model
+
+# Check normality of residuals
+residuals_height <- residuals(model_height)
+hist(residuals_height, main="Histogram of Residuals")
+
+# Shapiro-Wilk test for normality
+print(shapiro.test(residuals_height))
+
+# Check homogeneity of variances
+plot(model_height, which=1)  # Residuals vs Fitted
+plot(model_height, which=2)  # Scale-Location plot
+
+# Levene's test for homogeneity of variances
+#leveneTest(model_height)

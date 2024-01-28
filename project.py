@@ -4,19 +4,22 @@ import matplotlib.pyplot as plt
 import pylab
 import scipy.stats as stats
 import statsmodels.api as sm
+import seaborn as sns
 
-with open("retrieved_data.csv") as file:
+from scipy.stats import norm
+
+with open("retrieved_data1.csv") as file:
     data = pd.read_csv(file)
 
 print(data.columns)
 
 
-h_diff = data["estimated_height"] - data["measured_height"]
+h_diff = data["measured_height"] - data["estimated_height"]
 print(h_diff)
 print(sum(h_diff))
 
 
-w_diff = data["estimated_weight"] - data["measured_weight"]
+w_diff = data["measured_weight"] - data["estimated_weight"]
 print(w_diff)
 print(sum(w_diff))
 
@@ -27,7 +30,7 @@ data["height_dev"] = data["estimated_height"] - data["measured_height"]
 data["weight_dev"] = data["estimated_weight"] - data["measured_weight"]
 
 
-"""
+
 plt.figure(figsize=(12, 4))
 
 plt.subplot(1, 2, 1)
@@ -69,6 +72,9 @@ plt.show()
 fig, ax = plt.subplots()
 
 
+
+
+
 boxplot_height = ax.boxplot(h_diff, positions=[1], widths=0.6, whis=True, patch_artist=True)
 boxplot_weight = ax.boxplot(w_diff, positions=[2], widths=0.6, whis=True, patch_artist=True)
 
@@ -85,7 +91,7 @@ ax.set_ylabel('Difference')
 ax.set_title('Boxplots of Height and Weight Differences')
 
 plt.show()
-"""
+
 
 # Descriptive Statistics
 h_mean, h_std, h_med = (np.mean(h_diff), np.std(h_diff), np.median(h_diff))
@@ -107,8 +113,8 @@ print(w_med)
 
 
 # Q-Q plots
-#fig = sm.qqplot(w_diff, line="s")
-#plt.show()
+fig = sm.qqplot(w_diff, line="s")
+plt.show()
 
 
 print(list(h_diff))
@@ -160,7 +166,7 @@ print(fw_var)
 print(fw_std)
 print(fw_med)
 
-"""
+
 self_reported = data["estimated_height"]
 measured = data["measured_height"]      # Replace [...] with your data
 
@@ -177,7 +183,7 @@ plt.xlabel('Mean of Self-reported and Measured')
 plt.ylabel('Difference (Self-reported - Measured)')
 plt.legend()
 plt.show()
-"""
+
 
 print(data.columns)
 print(data["age"])
@@ -192,5 +198,4 @@ print((data["age_group"] == "old").sum())
 
 subdata = data[["number", "height_dev", "weight_dev", "gender", "age_group"]]
 print(subdata)
-
 

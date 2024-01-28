@@ -12,17 +12,19 @@ password <- "T3chB10!"
 con =  dbConnect(dbDriver("PostgreSQL"), host = host, port = port, dbname = dbname, user = user, password = password)
 
 
+# drop a table from database
+
+dbRemoveTable(con, table_name)
+
+
+
 # Get the list of all tables in the Veg database
 tables <- dbListTables(con)
 
 print(tables)
 
-
-# get the stored infromation in a specific table
-my_table <- dbReadTable(con, "BodyInfo")
+my_table <- dbReadTable(con, "body.MeasurementResults")
 print(my_table)
-
-
 
 
 
@@ -34,10 +36,8 @@ new_data <- data.frame(project="BodyPro11")
 dbWriteTable(con, name = "body.Project", value = new_data, row.names = FALSE, append = TRUE)
 
 cat("Additional data inserted successfully.\n")
-"""
-  id given_name family_name matrikel_nr project_id
-1  1    Loghman      Samani     3585810          2
-"""
+
+
 
 
 
@@ -47,10 +47,6 @@ author_table <- data.frame(given_name="Loghman", family_name="Samani", matrikel_
 
 dbWriteTable(con, name = "body.Author", value = author_table, row.names = FALSE, append = TRUE)
 
-"""
-   id given_name family_name matrikel_nr project_id
-1  1    Loghman      Samani     3585810          2
-"""
 
 
 
@@ -66,10 +62,8 @@ gender1 = c('male', 'male', 'male', 'male', 'male', 'male', 'male', 'male', 'mal
 
 
 age1 = c(26, 39, 48, 34, 30, 27, 48, 40, 26, 45, 38, 42, 30, 30, 43, 40, 23, 27, 43, 22, 55, 19, 17, 21, 57, 19, 44, 33, 41, 59, 49, 25, 51, 29, 46, 30, 23, 29, 38, 55)
-measured_weight1 = c(73.1, 79.1, 76.3, 85.8, 71.0,  82.7, 91.5, 77.6, 72.2, 91.6, 83.9, 80.8, 85.7, 76.0, 85.0, 71.4, 82.3, 83.3, 74.9, 88.0, 62.3, 60.4, 66.5, 62.2, 64.7,
-                    61.4, 65.9, 61.2, 67.4, 57.8, 54.2, 62.6, 60.8, 69.2, 63.2, 59.7, 55.5, 68.2, 61.6, 58.9)
-measured_height1 = c(175.5, 172.9, 168.5, 176.9, 175.0,  170.2, 174.1, 169.0,  178.1, 173.7, 175.1, 167.4, 176.1, 171.5, 174.3, 172.0,  178.6, 170.0,  172.6, 172.0, 
-                    170.7, 167.2, 169.9, 167.5, 165.8, 171.4, 168.9, 157.6, 163.4, 163.6, 157.7, 167.6, 164.4, 167.7, 172.0,  162.3, 157.7, 158.3, 157.5, 161.6)
+measured_weight1 = c(74.0, 77.8, 75.5, 85.8, 71.4, 82.2, 88.3, 77.1, 70.8, 89.5, 83.3, 77.4, 82.4, 75.9, 83.7, 71.1, 82.0, 84.1, 73.1, 86.8, 62.2, 59.8, 64.7, 61.7, 64.4, 60.5, 64.0, 60.7, 66.0, 56.3, 53.7, 61.2, 60.1, 67.9, 61.9, 58.6, 55.3, 66.5, 61.0, 58.6)
+measured_height1 = c(175.7, 173.4, 169.4, 177.1, 175.3, 170.7, 174.3, 169.5, 178.6, 174.3, 176.1, 168.3, 177.1, 171.9, 174.9, 172.5, 178.7, 170.7, 173.2, 172.3, 171.1, 167.7, 170.2, 167.9, 165.8, 171.5, 169.1, 157.7, 163.5, 164.0, 157.7, 167.8, 164.5, 167.7, 172.3, 162.8, 158.1, 158.6, 157.5, 161.7)
 
 
 person_table <- data.frame(id=id1, number=number1, gender=gender1, age=age1, measured_weight=measured_weight1, measured_height=measured_height1)
@@ -137,9 +131,8 @@ id1 = seq(1, 40)
 project_id1 = rep(2, 40)
 person1 = seq(1, 40)
 
-estimated_height1 = c(175, 174, 171, 177, 175, 171, 174, 170, 179, 175, 178, 170, 179, 172, 176, 173, 178, 172, 174,
-                     172, 172, 169, 171, 169, 165, 171, 169, 157, 163, 165, 157, 168, 164, 167, 173, 164, 159, 159, 157, 161)
-estimated_weight1 = c(76, 78, 76, 87, 73, 83, 87, 78, 71, 89, 84, 76, 81, 77, 84, 72, 83, 86, 73, 87)
+estimated_height1 = c(175, 174, 171, 177, 175, 171, 174, 170, 179, 175, 178, 170, 179, 172, 176, 173, 178, 172, 174, 172, 172, 169, 171, 169, 165, 171, 169, 157, 163, 165, 157, 168, 164, 167, 173, 164, 159, 159, 157, 161)
+estimated_weight1 = c(76, 78, 76, 87, 73, 83, 87, 78, 71, 89, 84, 76, 81, 77, 84, 72, 83, 86, 73, 87, 64, 61, 64, 63, 66, 61, 63, 62, 66, 56, 55, 61, 61, 68, 62, 59, 57, 66, 62, 60)
 
 measure_table <- data.frame(id=id1, estimated_height=estimated_height1, estimated_weight=estimated_weight1, project_id=project_id1, person=person1)
 
@@ -147,6 +140,7 @@ measure_table <- data.frame(id=id1, estimated_height=estimated_height1, estimate
 dbWriteTable(con, name = "body.MeasurementResults", value = measure_table, row.names = FALSE, append = TRUE)
 
 cat("Additional data inserted successfully.\n")
+
 
 
 """

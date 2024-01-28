@@ -77,19 +77,19 @@ def measure_generate(lst, left_r, right_r, r_num, num=20):
     return np.array(measurements)
 
 
-fm_high = measure_generate(m_high, 3, 1, r_num=1)
+fm_high = measure_generate(m_high, 2, 1.5, r_num=1)
 print(fm_high)
 
 
-ff_high = measure_generate(f_high, 2, 1, r_num=1)
+ff_high = measure_generate(f_high, 1.5, 1, r_num=1)
 print(ff_high)
 
 
-fm_weight = measure_generate(m_weight, 3, 5, r_num=1)
+fm_weight = measure_generate(m_weight, 1.5, 2, r_num=1)
 print(fm_weight)
 
 
-ff_weight = measure_generate(f_weight, 2, 3, r_num=1)
+ff_weight = measure_generate(f_weight, 1, 1.4, r_num=1)
 print(ff_weight)
 
 
@@ -107,16 +107,13 @@ data = pd.DataFrame({
 print(data)
 
 
-"""
 
-Deviation in Height (cm): The calculated difference between guessed and measured height.
-Deviation in Weight (kg): The calculated difference between guessed and measured weight.
-Age Group: Categorize participants into "Young" and "Old" based on an age threshold.
-"""
 
-diff_height = round(data["Guessed Height (cm)"] - data["Measured Height (cm)"], 2)
-diff_weight = round(data["Guessed Weight (kg)"] - data["Measured Weight (kg)"], 2)
-age_group = ["Young" if age < 35 else "Old" for age in list(data["Age"])]
+
+diff_height = round(data["Measured Height (cm)"] - data["Guessed Height (cm)"], 2)
+diff_weight = round(data["Measured Weight (kg)"] - data["Guessed Weight (kg)"], 2)
+age_group = ["young" if old <= 28 else ("middle age" if old > 28 and old < 42 else "old") for old in data["Age"]]
+
 
 
 data["Deviation in Height (cm)"] = diff_height

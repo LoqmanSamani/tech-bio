@@ -8,7 +8,7 @@ with open(path) as file:
 
 print(data.columns)
 
-"measured_weight measured_height  estimated_height estimated_weight project_idperson"
+
 
 
 id = range(1, 41)

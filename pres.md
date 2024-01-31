@@ -1,6 +1,8 @@
+
+
 #                  Wissenschaftliche Methodik I (Projekt)
 
-   [Loghman Samani](https://github.com/LoqmanSamani),  Winter 2024
+   [Loghman Samani](samaniloqman91@gmail.com),  Winter 2024
 
 
 
@@ -142,7 +144,7 @@ dbDisconnect(con)
 ##### **Weight Hypothesis**
 
 * **Null Hypothesis (H0)**: There is no significant difference between reported and measured weights (**μ = 0**).
-* **Alternative Hypothesis (H1)**: The differences in reported and measured weights are significantly less than 0 (**H1: μ  < 0**).
+* **Alternative Hypothesis (H1)**: The differences in reported and measured weights are significantly less than 0 (**μ  < 0**).
 
 ##### **Height Hypothesis**
 
@@ -453,17 +455,23 @@ print(subdata)
 
 **Null Hypotheses (H0):**
 
-* There is no significant difference in height differences between age groups.
-* There is no significant difference in height differences between genders.
-* There is no significant interaction effect between age and gender on height differences.
-* Repeat the same for weight differences.
+* There is no significant difference in height and weight differences between **age groups**.
+
+* There is no significant difference in height and weight differences between **genders**.
+
+* There is no significant interaction effect between **age and gender** on height and weight differences.
+
+  
 
 **Alternative Hypotheses (H1):**
 
-* There is a significant difference in height differences between age groups.
-* There is a significant difference in height differences between genders.
-* There is a significant interaction effect between age and gender on height differences.
-* Repeat the same for weight differences.
+* There is a significant difference in height and weight differences between age groups.
+
+* There is a significant difference in height and weight differences between genders.
+
+* There is a significant interaction effect between age and gender on height and weight differences.
+
+  
 
 
 
@@ -485,7 +493,7 @@ print(w_summ)
 ​                    Df  Sum-Sq  Mean-Sq  F-value  Pr(>F)                                                            Df  Sum-Sq  Mean-Sq  F-value  Pr(>F)
 gender        1  0.272        0.2723       0.382     0.5406                                      gender         1       0.036      0.0360      0.052    0.822
 age_group  2  0.030        0.0151       0.021     0.9790                                      age_group   2       1.594      0.7970       1.144    0.331
-gender:age_group 2  4.904  2.4521   3.442  0.0435 *                                    gender:age_group 2   2.894   1.4471   2.077   0.141
+gender:age_group 2  4.904  2.4521   3.442  **0.0435** *                                   gender:age_group 2   2.894   1.4471   2.077   0.141
 Residuals        34 24.223  0.7124                                                                      Residuals        34 23.692  0.6968
 
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1

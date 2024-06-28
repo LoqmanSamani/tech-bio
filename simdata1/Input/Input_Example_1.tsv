@@ -1,0 +1,3 @@
+Cell Type	CASP3	CASP9	XIAP	mitoSMAC	APAF1	mitoCytC	Time (mins)	Figure Mode	MOMP (%)	Model Version
+HeLa	0.12	0.03	0.063	0.126	0.372	10	30	1	100	3
+HCT116	0.09	0.008	0.075	0.227	0.47	10	30	1	100	3

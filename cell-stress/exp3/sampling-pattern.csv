@@ -1,0 +1,9 @@
+Sample,Cell Line,Treatment
+s1,wt,Control
+s2,wt,10 ng/ml TRAIL
+s3,wt,50 ng/ml TRAIL
+s4,wt,100 ng/ml TRAIL
+s5,ko,Control
+s6,ko,10 ng/ml TRAIL
+s7,ko,50 ng/ml TRAIL
+s8,ko,100 ng/ml TRAIL

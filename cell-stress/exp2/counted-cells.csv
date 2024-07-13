@@ -1,7 +1,7 @@
 Location,First Count,Second Count,Third Count,Fourth Count,Fifth Count,Sixth Count
-Top Left,29,35,42,24,29,35
-Top Right,46,26,19,22,46,25
-Bottom Left,49,21,21,30,49,25
-Bottom Right,39,24,24,29,39,27
-Average,40.75,26.5,26.5,26.25,40.75,28.0
-Experiemnt,Gene Function Analysis(exp3),Freezing Cells(exp2),-,-,-,-
+Top Left,29,35,42,36,29,35
+Top Right,46,26,22,19,46,25
+Bottom Left,49,21,20,21,49,25
+Bottom Right,39,24,24,24,39,27
+Average,40.75,26.5,27.0,25.0,40.75,28.0
+Experiemnt,"Gene Function Analysis(exp3, day1)","Freezing Cells(exp2, day5)","Gene Function Analysis(exp3, wt, day6)","Gene Function Analysis(exp3, dr5-ko, day6)",-,-

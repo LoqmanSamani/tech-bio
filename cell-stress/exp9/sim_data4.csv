@@ -1,0 +1,7 @@
+Cell Type,Standard Deviation (%),Mean Substrate Cleavage (%),Individual Traces (Examples)
+HeLa,10,60,"[58, 62, 60]"
+HeLa,20,55,"[52, 58, 55]"
+HeLa,30,50,"[45, 55, 50]"
+HCT116,10,65,"[63, 67, 65]"
+HCT116,20,60,"[57, 63, 60]"
+HCT116,30,55,"[50, 60, 55]"

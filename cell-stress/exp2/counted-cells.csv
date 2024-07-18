@@ -1,7 +1,7 @@
-Location,First Count,Second Count,Third Count,Tourth Count,Fifth Count,Fixth Count,Seventh Count,Eighth Count
-Top Left,31,29,24,35,42,36,29,35
-Top Right,32,46,22,26,22,19,46,25
-Bottom Left,31,49,30,21,20,21,49,25
-Bottom Right,34,39,29,24,24,24,39,27
-Average,32.0,40.75,26.25,26.5,27.0,25.0,40.75,28.0
-Experiemnt,"Experiment 4, day1","Experiment 3, day1","Experiment 5, day4","Experiment 2, day5","Experiment 3, wt, day6","Experiment 3, dr5-ko, day6",-,-
+Location,First Count,Second Count,Third Count,Fourth Count,Fifth Count,Sixth Count,Seventh Count
+Top Left,31,29,24,35,42,36,31
+Top Right,32,46,22,26,22,19,26
+Bottom Left,31,49,30,21,20,21,25
+Bottom Right,34,39,29,24,24,24,26
+Average,32.0,40.75,26.25,26.5,27.0,25.0,27.0
+Experiemnt,"Experiment 4, day1","Experiment 3, day1","Experiment 5, day4","Experiment 2, day5","Experiment 3, wt, day6","Experiment 3, dr5-ko, day6","Experiment 7, day11"

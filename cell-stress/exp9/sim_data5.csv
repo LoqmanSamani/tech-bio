@@ -1,0 +1,21 @@
+Patient,Caspase 3 Substrate Cleavage (%),Survival Time (months),Event,Group
+Patient 1,26.0,38.9,0,Competent
+Patient 2,24.0,35.2,0,Resistant
+Patient 3,22.0,32.3,0,Resistant
+Patient 4,15.0,32.2,0,Resistant
+Patient 5,20.0,27.4,0,Resistant
+Patient 6,10.0,9.5,1,Resistant
+Patient 7,18.0,25.6,1,Resistant
+Patient 8,12.0,25.7,0,Resistant
+Patient 9,28.0,23.7,1,Competent
+Patient 10,16.0,26.9,0,Resistant
+Patient 11,14.0,25.7,0,Resistant
+Patient 12,23.0,33.5,0,Resistant
+Patient 13,13.0,31.0,1,Resistant
+Patient 14,17.0,32.0,1,Resistant
+Patient 15,11.0,12.0,1,Resistant
+Patient 16,30.0,28.4,0,Competent
+Patient 17,29.0,70.5,0,Competent
+Patient 18,19.0,20.0,1,Resistant
+Patient 19,25.0,34.1,0,Resistant
+Patient 20,21.0,25.9,1,Resistant

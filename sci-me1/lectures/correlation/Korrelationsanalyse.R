@@ -1,0 +1,55 @@
+cor.test(~s+v, data=Wq[sample(1:nrow(Wq), 12),])
+xx <- 1:6
+yy <- c(-0.2,2.5,1,2,3.5,-1)
+plot(xx,yy)
+cor(xx,yy,method="spearman")
+cor(xx,yy,method="kendall")
+cor(xx,yy,method="pearson")
+chisq.test(Wq$f, Wq$e, correct=F)
+chisq.test(Wq$f, Wq$e)
+fisher.test(Wq$f, Wq$e)
+Wq.logit <-glm(e~t,data=Wq,family="binomial")
+summary(Wq.logit)
+fit_e = predict(Wq.logit, Wq)
+fit_e_prob = exp(fit_e)/(1+exp(fit_e))
+plot(fit_e_prob~Wq$t)
+library(ppcor)
+attach(Wq)
+pcor.test(s,t,v, method="pearson")
+fit = lm(s~v+t+q)
+summary(fit)
+scS = scale(Wq$s)
+scV = scale(Wq$v)
+scT = scale(Wq$t)
+scQ = scale(Wq$q)
+scwq <- data.frame(scS,scV,scT,scQ)
+lm(scS ~ scV+scT+scQ, data=scwq)
+res <- cor(Wq[,2:7])
+res
+library(corrplot)
+corrplot(res, type = "upper", order = "hclust", tl.col = "black", tl.srt = 45)
+res <- cor(Wq[,2:9], method="spearman")
+corrplot(res, type = "upper", order = "hclust", tl.col = "black", tl.srt = 45)
+library("PerformanceAnalytics")
+col<- colorRampPalette(c("red", "white", "blue"))(20)
+heatmap(x = res, col = col, symm = TRUE)
+library(Hmisc)
+res2<-rcorr(as.matrix(Wq[,2:7]))
+flattenCorrMatrix <-
+  function(cormat, pmat) {
+    ut <- upper.tri(cormat)
+    data.frame(
+      row = rownames(cormat)[row(cormat)[ut]],
+      column = rownames(cormat)[col(cormat)[ut]],
+      cor  =(cormat)[ut],
+      p = pmat[ut]
+    )
+  }
+res3 <- flattenCorrMatrix(res2$r, res2$P)
+res4 <- subset(res3, p<0.05)
+res5 <- data.frame(res4[,1:3])
+colnames(res5) <- c("from", "to", "weight")
+library(igraph)
+net <- graph_from_data_frame(d=res5, directed=F)
+plot(net)
+plot(net, layout=layout_with_fr(net))

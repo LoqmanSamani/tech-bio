@@ -1,0 +1,403 @@
+\documentclass[12 px]{article}
+
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, amsfonts}
+
+\title{\huge Chi-Squared Test Results and Interpretations}
+
+
+\begin{document}
+
+\maketitle
+
+\section*{HER2 Status and Metastasis}
+\begin{lstlisting}[language=Python, breaklines=true]
+import numpy as np
+from scipy.stats import chi2_contingency
+
+obs = np.array([[14, 1, 15], [4, 5, 9], [72, 4, 76]])
+
+chi2, pval, dof, exp = chi2_contingency(obs)
+
+print("Chi-square statistic:", chi2)
+print("p-value:", pval)
+        
+\end{lstlisting}
+
+\textbf{Objective:} To determine if there is a significant association between HER2 status and the presence of metastasis in the liver and other organs.\\[5px]
+
+\textbf{Data}:
+
+- Observed counts:
+
+  - Liver Metastasis: [14 HER2+, 1 HER2-, Total: 15]
+  
+  - Other Organs Metastasis: [4 HER2+, 5 HER2-, Total: 9]
+  
+  - No Metastasis: [72 HER2+, 4 HER2-, Total: 76]
+  
+
+\textbf{Chi-Square Test Results:}
+
+- Chi-square statistic: 22.833
+
+- p-value: 0.000137
+
+
+\textbf{Interpretation:}
+
+The chi-square test of independence was performed to evaluate whether there is a 
+statistically significant association between HER2 status (positive or negative) 
+and the presence of metastasis (in the liver, other organs, or no metastasis).
+
+
+\textbf{Chi-Square Statistic:}
+
+The chi-square statistic of 22.833 indicates the degree of deviation between the observed frequencies and the expected frequencies under the null hypothesis of independence. 
+
+\textbf{p-Value:}
+ 
+The p-value of 0.000137 is extremely low, well below the common significance level threshold of 0.05. 
+
+\textbf{Conclusion:}
+
+Given the p-value is significantly less than 0.05, we reject the null hypothesis. This provides strong evidence that there is a statistically significant association between HER2 status and the presence of metastasis.
+            
+\textbf{Summary:}
+
+The chi-square test results suggest that the HER2 status of patients is significantly
+associated with the occurrence of metastasis. Specifically, the likelihood of having 
+metastasis (whether in the liver or other organs) differs depending on whether the
+HER2 status is positive or negative. This significant association implies that HER2 
+status could be an important factor in understanding and potentially predicting metastasis patterns in patients.
+
+
+
+
+
+\section*{HER2 Status and Patient Vital Status}
+\begin{lstlisting}[language=Python, breaklines=true]
+import numpy as np
+from scipy.stats import chi2_contingency
+
+observed = np.array([[82, 7], [8, 3]])
+chi2, p, dof, expected = chi2_contingency(observed)
+
+print("Chi-squared test statistic:", chi2)
+print("p-value:", p)
+        
+\end{lstlisting}
+
+\textbf{Objective:} To determine if there is a significant association between patient vital status (alive or deceased) and HER2 status (positive or negative).\\[5px]
+
+\textbf{Data}:
+
+- Observed counts:
+
+   - Alive: [82 HER2+, 7 HER2-]
+   
+   - Deceased: [8 HER2+, 3 HER2-]
+
+  
+
+\textbf{Chi-Square Test Results:}
+
+- Chi-square statistic: 2.224
+
+- p-value: 0.1358
+
+
+\textbf{Interpretation:}
+
+The chi-square test of independence was conducted to assess the relationship between HER2 status and patient vital status.
+
+
+\textbf{Chi-Square Statistic:}
+
+The chi-square statistic of 2.224 reflects the difference between the observed frequencies and the frequencies expected under the null hypothesis (which assumes no association between the variables).
+
+\textbf{p-Value:}
+ 
+The p-value of 0.1358 is greater than the common significance level threshold of 0.05.
+
+\textbf{Conclusion:}
+
+Since the p-value is greater than 0.05, we fail to reject the null hypothesis. This indicates that there is no statistically significant association between HER2 status and patient vital status at the $5\%$ significance level.
+            
+\textbf{Summary:}
+
+The chi-square test results suggest that there is no significant association 
+between HER2 status and the vital status of patients. This implies that, based 
+on the given data, HER2 status does not appear to be a predictor of whether 
+patients are alive or deceased. This lack of significant association means 
+that other factors might be more influential in determining patient vital status.
+
+
+
+
+
+\section*{HER2 Status and Tumor Advancement}
+\begin{lstlisting}[language=Python, breaklines=true]
+import numpy as np
+from scipy.stats import chi2_contingency
+
+obs = np.array([[5, 2], [85, 8]])
+chi2, pval, dof, expected = chi2_contingency(obs)
+
+print("Chi-squared statistic:", chi2)
+print("P-value:", pval)
+        
+\end{lstlisting}
+
+\textbf{Objective:} To determine if there is a significant association between HER2 status(positive or negative) and tumor advancement (advanced or not advanced).\\[5px]
+
+\textbf{Data}:
+
+- Observed counts:
+
+  - Advanced tumor: [5 HER2+, 2 HER2-]
+  
+  - Not advanced tumor: [85 HER2+, 8 HER2-]
+
+\textbf{Chi-Square Test Results:}
+
+- Chi-square statistic: 1.092
+
+- p-value: 0.296
+
+
+\textbf{Interpretation:}
+
+The chi-square test of independence was performed to assess whether there is 
+a statistically significant association between HER2 status and tumor advancement.
+
+
+\textbf{Chi-Square Statistic:}
+
+The chi-square statistic of 1.092 indicates the degree of difference between the observed frequencies and the expected frequencies under the null hypothesis of independence.
+
+\textbf{p-Value:}
+ 
+The p-value of 0.296 is greater than the common significance level threshold of 0.05.
+
+\textbf{Conclusion:}
+
+Since the p-value is greater than 0.05, we fail to reject the null hypothesis. This indicates that there is no statistically significant association between HER2 status and tumor advancement at the $5\%$ significance level.
+            
+\textbf{Summary:}
+
+The chi-square test results suggest that there is no significant association 
+between HER2 status and whether a tumor is advanced or not. This implies that,
+based on the given data, HER2 status does not significantly influence the 
+likelihood of tumor advancement. Other factors might play a more critical 
+role in determining tumor advancement, and further investigation is 
+needed to identify those factors.
+
+
+
+
+
+\section*{HER2 Status and Patient Age}
+
+\begin{lstlisting}[language=Python, breaklines=true]
+import numpy as np
+from scipy.stats import chi2_contingency
+
+observed = np.array([[73, 7], [17, 3]])
+chi2, p_value, dof, expected = chi2_contingency(observed)
+
+print("Chi-square statistic:", chi2)
+print("P-value:", p_value)
+      
+\end{lstlisting}
+
+\textbf{Objective:} To determine if there is a significant association between age 
+          (less than 50 vs. greater than 50) and HER2 status (positive vs. negative).
+          
+          
+\textbf{Data}:
+
+- Observed counts:
+
+  - Age < 50: [73 HER2+, 7 HER2-]
+  
+  - Age > 50: [17 HER2+, 3 HER2-]
+  
+
+\textbf{Chi-Square Test Results:}
+
+- Chi-square statistic: 0.174
+
+- p-value: 0.677
+
+\textbf{Interpretation:}
+
+The chi-square test of independence was performed to assess whether there 
+is a statistically significant association between age groups and HER2 status.
+
+\textbf{Chi-Square Statistic:}
+
+The chi-square statistic of 0.174 indicates the degree of deviation between the observed frequencies and the expected frequencies under the null hypothesis of independence.
+
+
+\textbf{p-Value:}
+ 
+The p-value of 0.677 is substantially greater than the common significance level threshold of 0.05.
+
+\textbf{Conclusion:}
+
+Since the p-value is greater than 0.05, we fail to reject the null hypothesis. 
+            This indicates that there is no statistically significant association between
+            age and HER2 status at the $5\%$ significance level.
+            
+\textbf{Summary:}
+
+The chi-square test results suggest that there is no significant association between 
+the age of patients (whether they are younger than 50 or older than 50) and their 
+HER2 status. This implies that HER2 status does not significantly vary between 
+the two age groups in this dataset. Other factors may need to be considered 
+to understand the variations in HER2 status among patients better.
+
+
+
+
+
+
+\section*{HER2 Status and Diagnostic Age}
+
+\begin{lstlisting}[language=Python, breaklines=true]
+import numpy as np
+from scipy.stats import chi2_contingency
+
+obs = [[78, 7, 85], [12, 3, 15]]
+chi2, pval, dof, exp = chi2_contingency(obs)
+
+print(f"Chi-square statistic: {chi2:.4f}")
+print(f"P-value: {pval:.4f}")
+      
+\end{lstlisting}
+
+\textbf{Objective:} To determine if there is a significant association between diagnostic age 
+(less than 50 vs. greater than 50) and HER2 status (positive vs. negative).
+          
+\textbf{Data}:
+
+- Observed counts:
+
+  - Age < 50: [78 HER2+, 7 HER2-, Total: 85]
+  
+  - Age > 50: [12 HER2+, 3 HER2-, Total: 15]
+  
+
+\textbf{Chi-Square Test Results:}
+
+- Chi-square statistic: 1.9608
+
+- p-value: 0.3752
+
+\textbf{Interpretation:}
+
+The chi-square test of independence was performed to assess whether there is a statistically 
+significant association between diagnostic age groups and HER2 status.
+
+
+\textbf{Chi-Square Statistic:}
+
+The chi-square statistic of 1.9608 indicates the degree of difference between the observed frequencies and the expected frequencies under the null hypothesis of independence.
+
+\textbf{p-Value:}
+ 
+The p-value of 0.3752 is greater than the common significance level threshold of 0.05.
+
+
+\textbf{Conclusion:}
+
+Since the p-value is greater than 0.05, we fail to reject the null hypothesis.
+            This indicates that there is no statistically significant association between
+            diagnostic age and HER2 status at the $5\%$ significance level.
+            
+\textbf{Summary:}
+
+The chi-square test results suggest that there is no significant association 
+between the age at diagnosis (whether patients are younger than 50 or older than 50) 
+and HER2 status. This implies that HER2 status does not significantly differ between
+the two diagnostic age groups in this dataset. Other factors might be more critical
+in determining HER2 status, and further investigation is needed to understand the
+relationship better.
+
+
+
+\section*{HER2 Status and Tumor Location}
+
+\begin{lstlisting}[language=Python, breaklines=true]
+import numpy as np
+from scipy.stats import chi2_contingency
+
+obs = np.array([[28, 7],[62, 3]])
+chi2, pval, dof, exp = chi2_contingency(obs)
+
+print("Chi-square test statistic:", chi2)
+print("p-value:", pval)
+      
+\end{lstlisting}
+
+\textbf{Objective:} To determine if there is a significant association between tumor location (rectum and sigmoid vs. colon) and HER2 status (positive vs. negative).
+
+          
+\textbf{Data}:
+
+- Observed counts:
+
+  - Rectum and Sigmoid: [28 HER2+, 7 HER2-]
+  
+  - Colon: [62 HER2+, 3 HER2-]
+  
+
+\textbf{Chi-Square Test Results:}
+
+- Chi-square statistic: 4.396
+
+- p-value: 0.036
+
+
+\textbf{Interpretation:}
+
+The chi-square test of independence was conducted to evaluate whether there is a 
+statistically significant association between tumor location and HER2 status.
+
+
+\textbf{Chi-Square Statistic:}
+
+The chi-square statistic of 4.396 indicates the degree of deviation between the observed
+frequencies and the expected frequencies under the null hypothesis of independence.
+
+\textbf{p-Value:}
+ 
+The p-value of 0.036 is less than the common significance level threshold of 0.05.
+
+
+\textbf{Conclusion:}
+
+Since the p-value is less than 0.05, we reject the null hypothesis. 
+This indicates that there is a statistically significant association between 
+tumor location and HER2 status at the $5\%$ significance level.
+            
+\textbf{Summary:}
+
+The chi-square test results suggest that there is a significant association between tumor
+location (rectum and sigmoid vs. colon) and HER2 status. This means that HER2 status
+significantly varies depending on whether the tumor is located in the rectum and 
+sigmoid or the colon. This significant association implies that tumor location 
+could be an important factor in understanding and predicting HER2 status in patients. 
+Further investigation is needed to explore the underlying reasons for this 
+association and its implications for treatment and prognosis.
+
+
+
+
+
+
+\end{document}
